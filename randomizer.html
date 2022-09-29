@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Рандомайзер</title>
+    <link rel="stylesheet" href="css/randomizer.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <script src="js/libs/fileSaver.js"></script>
+    <script src="js/randomizer.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/formErrorsHandling.js"></script>
+</head>
+<body onload="pageLoading()">
+<div class="main-container">
+    <div class="randomizer">
+        <div class="randomizer__logo">
+            <h1>RANDOMIZER</h1>
+        </div>
+        <div class="randomizer_z">
+            <div class="randomizer-window" id="mainWindow">
+                <div class="randomizer-window_flex">
+                    <div class="randomizer-window-left">
+                        <p class="randomizer-window-left__item_first">Найдите свои счастливые<br/>числа!</p>
+                        <p class="randomizer-window-left__item_second">Диапазон</p>
+                        <div class="randomizer-window-left__item_third">
+                            <label class="randomizer-window-left__item_third_text"> от
+                                <input type="number" id="leftBorder" name="leftBorder" value="0"
+                                       class="randomizer-input randomizer-input-first"
+                                       oninput="correctInputPermission(this)">
+                            </label>
+                            <label class="randomizer-window-left__item_third_text">до
+                                <input type="number" id="rightBorder" name="rightBorder" value="100"
+                                       class="randomizer-input randomizer-input-second"
+                                       oninput="correctInputPermission(this)">
+                            </label>
+                        </div>
+                        <p class="randomizer-window-left__item_fourth">Количество</p>
+                        <div class="randomizer-window-left__item_fifth">
+                            <label class="randomizer-window-left__item_fifth_text">
+                                <input type="number" id="numbersAmount" name="numbersAmount" value="10"
+                                       class="randomizer-input randomizer-input-third"
+                                       oninput="correctInputPermission(this)">чисел
+                            </label>
+                        </div>
+                    </div>
+                    <div class="randomizer-window-right">
+                        <div class="randomizer-window-right__item">
+                            <img src="img/minus.svg" alt="options" id="randomizer-window-right__item_options">
+                            <img src="img/minus_anim.svg" alt="options_animation"
+                                 id="randomizer-window-right__item_options_animation">
+                        </div>
+                        <div class="randomizer-window-right__item">
+                            <img src="img/question.svg" alt="info" id="randomizer-window-right__item_info">
+                        </div>
+                    </div>
+                </div>
+                <div class="randomizer-window-center" id="randomizer-window-center">
+                    <div class="randomizer-window-center__heading overflow-elements">
+                        Дополнительно:
+                    </div>
+                    <div class="center-inputs">
+                        <div class="center-inputs__row">
+                            <div class="center-inputs__item center-inputs__item_left">
+                                <label class="checkbox__label overflow-elements">
+                                    <input type="checkbox" id="evenOnly" name="evenOnly" class="checkbox-input">
+                                    <span id="evenOnlyCheckbox" class="checkbox overflow-elements"></span>
+                                    Только чётные
+                                </label>
+                            </div>
+                            <div class="center-inputs__item">
+                                <label class="checkbox__label overflow-elements">
+                                    <input type="checkbox" id="allowFractional" name="allowFractional"
+                                           class="checkbox-input">
+                                    <span class="checkbox overflow-elements"></span>
+                                    Разрешить дробные значения
+                                </label>
+                            </div>
+                        </div>
+                        <div class="center-inputs__row">
+                            <div class="center-inputs__item center-inputs__item_left">
+                                <label class="checkbox__label overflow-elements">
+                                    <input type="checkbox" id="oddOnly" name="oddOnly" class="checkbox-input">
+                                    <span id="oddOnlyCheckbox" class="checkbox overflow-elements"></span>
+                                    Только нечётные
+                                </label> `
+                            </div>
+                            <div class="center-inputs__item">
+                                <label id="charactersAfterLabel"
+                                       class="center-inputs__item_label overflow-elements disabled-labels"
+                                       for="charactersAfter">
+                                    Знаков после запятой:
+                                </label>
+                                <input type="number" id="charactersAfter" name="charactersAfter" value="0" disabled
+                                       class="randomizer-input characters-after-input overflow-elements"
+                                       oninput="correctInputPermission(this)">
+                            </div>
+                        </div>
+                        <div class="center-inputs__row_last">
+                            <div class="center-inputs__item">
+                                <label class="checkbox__label overflow-elements">
+                                    <input type="checkbox" id="importAs" name="importAs" class="checkbox-input">
+                                    <span class="checkbox overflow-checkbox overflow-elements"></span>
+                                    <a class="randomizer-input_text">Импортировать, как</a>
+                                    <select class="randomizer-input overflow-elements" id="importAsSelect"
+                                            name="importAsSelect" disabled>
+                                        <option id="txtFile" name="txtFile">.txt</option>
+                                        <option id="xlsFile" name="xlsFile">.xls</option>
+                                    </select>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="randomizer-window-bottom">
+                    <div class="bottom-inputs">
+                        <div class="bottom-inputs__item">
+                            <label class="checkbox__label">
+                                <input type="checkbox" id="noRepeat" name="noRepeat" class="checkbox-input">
+                                <span class="checkbox"></span>
+                                Без повторов
+                            </label>
+                        </div>
+                        <div class="bottom-inputs__item">
+                            <label class="checkbox__label">
+                                <input type="checkbox" id="sortingResult" name="sortingResult" class="checkbox-input">
+                                <span class="checkbox"></span>
+                                Отсортировать результат
+                            </label>
+                        </div>
+                    </div>
+                    <div class="bottom-button" onclick="generateButtonReaction(0)">
+                        <p class="bottom-button__text">Сгенерировать</p>
+                    </div>
+                </div>
+            </div>
+            <div class="randomizer-window" id="resultWindow">
+                <div class="randomizer-window_flex randomizer-input_flex">
+                    <div class="randomizer-input-menu">
+                        <div class="randomizer-input-menu__text" id="resultInputParameters">
+                            <a class="lato-black">Ваш результат:</a><br>
+                            <a class="lato-black">8</a> чисел от <a class="lato-black">7</a> до <a
+                                class="lato-black">52</a>
+                        </div>
+                        <div class="randomizer-input-menu__copy" onclick="copyGeneratedNumbers()">
+                            <img src="img/copy.svg" alt="options" id="copyButton">
+                        </div>
+                        <div class="randomizer-input-menu__edit" onclick="editSettings()">
+                            <img src="img/edit.svg" alt="options" id="editButton">
+                        </div>
+                    </div>
+                    <div class="randomizer-input__scrollbar">
+                        <div class="randomizer-input__input" id="resultInput">
+
+                        </div>
+                        <table class="randomizer-input__table" id="xlsxTable">
+
+                        </table>
+                    </div>
+                    <div class="randomizer-input-repeat">
+                        <div class="randomizer-input-repeat__button" onclick="generateButtonReaction(1)">
+                            Повторить
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="randomizer-window loading-window" id="loadingWindow">
+                <img src="img/coin.gif" class="loading-window__gif" alt="загрузка...">
+                <p class="loading-window__text" id="loadingText"></p>
+            </div>
+            <div class="randomizer-info" id="randomizer-info">
+                <div class="randomizer-info__h">
+                    Справка о значениях
+                </div>
+                <div class="randomizer-info__text">
+                    • числа должны быть в диапазоне от -999999 до 999999
+                    <br/>• чисел должно быть не больше 10000
+                    <br/>• в числе не должно быть более 8 знаков после запятой
+                </div>
+            </div>
+            <div class="randomizer-errors" id="randomizerErrors">
+                <div class="randomizer-errors__text" id="randomizerErrorsText">
+                    • при выбранных настройках
+                    невозможно сгенерировать более n чисел
+                    <br/>• левая граница диапазона не может быть больше правой
+                    <br/>• превышены максимальные допустимые значения параметров
+                </div>
+            </div>
+            <div class="white-window">
+
+            </div>
+            <div class="invisible-window" id="invisibleWindow">
+
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        Designed by Dominika Grishaeva 2022
+    </div>
+</div>
+</body>
+</html>
