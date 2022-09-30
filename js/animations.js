@@ -9,6 +9,10 @@ const pageLoading = () => {
     document.getElementById('importAs').addEventListener('click', allowChoosingType);
     document.getElementById('oddOnlyCheckbox').addEventListener('click', oddOnlyCheck);
     document.getElementById('evenOnlyCheckbox').addEventListener('click', evenOnlyCheck);
+    document.getElementById('leftBorder').addEventListener('keydown', correctInputPermission);
+    document.getElementById('rightBorder').addEventListener('keydown', correctInputPermission);
+    document.getElementById('numbersAmount').addEventListener('keydown', correctInputPermission);
+    document.getElementById('charactersAfter').addEventListener('keydown', correctInputPermission);
 }
 
 

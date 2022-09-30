@@ -179,13 +179,29 @@ const allowChoosingType = () => {
 
 }
 
+
+let minusInputFlag = 0;
+
+
 /**
  * Позволяет избегать попадания неправильных символов в поле ввода
  *
- * @param e
+ * @param e ивент изменения значения инпута
  */
 const correctInputPermission = (e) => {
-    //TODO: УБРАТЬ НАХУЙ БУКВУ Е И ТОЧКУ ИЗ МОЕЙ ЖИЗНИ
+
+    const value = e.target.value + e.key;
+
+    if (value.includes('-') && minusInputFlag === 1 ||
+        ["+", "e", "E"].includes(e.key) ||
+        (minusInputFlag === 0 && value.includes('-') && value.length > 1)) {
+        e.preventDefault();
+    }
+
+    minusInputFlag = 0;
+    if (value.includes('-')) {
+        minusInputFlag = 1;
+    }
 
 }
 
